@@ -1,0 +1,42 @@
+# Imagem Docker
+FROM postgres:13.1
+
+# Autor
+LABEL Author="Houston Santos"
+
+# Variaveis de ambiente para criação do PostgreSql, parâmetros utilizados 
+# estão basedos para configuração do ambiente Totvs Protheus 12.1.27. 
+# DISPLAY servidor de vídeo Mac para execução de aplicações linux GUI, como dbmonitor. 
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_INITDB_ARGS='--encoding=WIN1252 --locale=C --username=postgres'
+ENV DISPLAY=host.docker.internal:0
+ENV LD_LIBRARY_PATH=/srv/totvs/protheus/bin/appserver
+ENV TOPDATABASE=POSTGRES
+ENV TOPALIAS=docker_postgres
+
+# Instalando depedências e driver ODBC
+RUN apt-get update && apt-get install -y nano iputils-ping net-tools iputils-ping procps locate apt-file dmidecode  \ 
+    odbc-postgresql unixodbc libxkbcommon-x11-0 libnss3 libdbus-1-3 libgl1 libxmu6 libxrender1 libxrandr2 libxcursor1 \
+    libxinerama1 libxft2 libxss1 libglib2.0-0 libasound2 libxcomposite1 curl unzip && apt-get clean
+
+# Atualizando base locate
+RUN updatedb
+
+# Copiando scripts e binários
+COPY build/postgresql/db_postgres.sh /docker-entrypoint-initdb.d
+COPY build/postgresql/entrypoint.sh /opt
+COPY scripts/setup.sh /tmp
+# COPY protheus/ /tmp
+COPY conf-files/ /tmp
+
+# Montando ambiente Protheus
+RUN /tmp/setup.sh
+
+# Setando diretório principal
+WORKDIR /srv/totvs
+
+# Expondo portas de conexão http, Postgres, Appserver, WebApp, Licenserver e DBAccess 
+EXPOSE 80 5432 2345 4321 8020 7890
+
+# Iniciando serviços de Banco, Licenserver, DBAccess e Appserver
+CMD /opt/entrypoint.sh

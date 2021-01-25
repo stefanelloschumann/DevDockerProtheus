@@ -1,0 +1,44 @@
+# Imagem Docker
+FROM mcr.microsoft.com/mssql/server:2017-latest
+
+# Autor
+LABEL Author="Houston Santos"
+
+# Variaveis de ambiente para criação do MSSQL 2017, parâmetros utilizados 
+# estão basedos para configuração do ambiente Totvs Protheus 12.1.27. 
+# DISPLAY servidor de vídeo Mac para execução de aplicações linux GUI, como dbmonitor. 
+ENV ACCEPT_EULA=Y
+ENV MSSQL_PID=Express
+ENV SA_PASSWORD=@mssql2017
+ENV DISPLAY=host.docker.internal:0
+ENV LD_LIBRARY_PATH=/srv/totvs/protheus/bin/appserver
+ENV TOPDATABASE=MSSQL
+ENV TOPALIAS=docker_mssql
+
+# Instalando depedências e driver ODBC
+RUN apt-get update && apt-get install -y nano iputils-ping net-tools iputils-ping procps locate apt-file dmidecode \ 
+    libxkbcommon-x11-0 libnss3 libdbus-1-3 libgl1 libxmu6 libxrender1 libxrandr2 libxcursor1 libxinerama1 libxft2 \
+    libxss1 libglib2.0-0 libasound2 libxcomposite1 unixodbc-dev curl unzip && apt-get clean
+
+# Atualizando base locate
+RUN updatedb
+
+# Copiando scripts e binários
+COPY build/mssql/entrypoint.sh /opt
+COPY build/mssql/db_mssql.sh /opt
+COPY build/mssql/db_mssql.sql /opt
+COPY scripts/setup.sh /tmp
+# COPY protheus/ /tmp
+COPY conf-files/ /tmp
+
+# Montando ambiente Protheus
+RUN /tmp/setup.sh
+
+# Setando diretório principal
+WORKDIR /srv/totvs
+
+# Expondo portas de conexão MSSQL, Appserver, WebApp, Licenserver e DBAccess 
+EXPOSE 80 1433 2345 4321 8020 7890
+
+# Iniciando serviços de Banco, Licenserver, DBAccess e Appserver
+CMD /opt/entrypoint.sh

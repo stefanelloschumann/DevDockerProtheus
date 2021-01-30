@@ -21,7 +21,7 @@ Projeto consiste na criação de um container Docker do ERP Protheus 12.1.27 com
 ## 1. Build do projeto
 
 ### POSTGRESQL
-`docker build -t houston/protheus:12.1.27 -f Dockerfile.postgres https://github.com/houstonsantos/DevDockerProtheus.git`
+```docker build -t houston/protheus:12.1.27 -f Dockerfile.postgres https://github.com/houstonsantos/DevDockerProtheus.git```
 
 ### MSSQL 
 `docker build -t houston/protheus:12.1.27 -f Dockerfile.mssql https://github.com/houstonsantos/DevDockerProtheus.git`

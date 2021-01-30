@@ -2,7 +2,7 @@
 
 Projeto consiste na criação de um container Docker do ERP Protheus 12.1.27 com dicioário de dados no banco de dados, usando Postgresql ou MSSQL 2017. Após build e execução do container, teremos uma única imagem com um único container, levantando o serviço de Banco, DBAccess, Licenserver e Appserver. A ideia é levantar um ambiente de testes, do ERP e para desenvolvimento rápido e prático para desenvolvedores e analistas que não tenham conhecimento aprofundado da infra do Protheus, redes e ate mesmo do próprio Docker.
 
->OBS: Este senário em hipótese nenhuma deve ser utilizado em ambientes de produção, pois a finalidade do Docker e termos processos únicos por containers, podendo ter exeções em alguns casos. Para hambientes em produsão poderiamos usar o **Docker Compose** ou **Compose file com Swarm** mais indicado criando um Cluster Swarm.
+>OBS: Este senário em hipótese nenhuma deve ser utilizado em ambientes de produção, pois a finalidade do Docker e termos processos únicos por containers, podendo ter exeções em alguns casos. Para hambientes em produsão poderiamos usar o **Docker Compose** ou **Compose file com Swarm**, mais indicado criando um Cluster Swarm.
 
 ## Versões dos binários utilizados
 
@@ -21,7 +21,7 @@ Projeto consiste na criação de um container Docker do ERP Protheus 12.1.27 com
 ## 1. Build do projeto
 
 ### POSTGRESQL
-```docker build -t houston/protheus:12.1.27 -f Dockerfile.postgres https://github.com/houstonsantos/DevDockerProtheus.git```
+`docker build -t houston/protheus:12.1.27 -f Dockerfile.postgres https://github.com/houstonsantos/DevDockerProtheus.git`
 
 ### MSSQL 
 `docker build -t houston/protheus:12.1.27 -f Dockerfile.mssql https://github.com/houstonsantos/DevDockerProtheus.git`
@@ -50,3 +50,9 @@ Porta | Descrição
 80 | Servidor HTTP http://localhost
 2345 | Appserver
 4321 | WebApp http://localhost:4321
+
+# Resultado
+
+<p align="center">
+    <img width="800" height="500" src="animation.gif">
+</p>

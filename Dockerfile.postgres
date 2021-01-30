@@ -15,9 +15,9 @@ ENV TOPDATABASE=POSTGRES
 ENV TOPALIAS=docker_postgres
 
 # Instalando depedências e driver ODBC
-RUN apt-get update && apt-get install -y nano iputils-ping net-tools iputils-ping procps locate apt-file dmidecode  \ 
-    odbc-postgresql unixodbc libxkbcommon-x11-0 libnss3 libdbus-1-3 libgl1 libxmu6 libxrender1 libxrandr2 libxcursor1 \
-    libxinerama1 libxft2 libxss1 libglib2.0-0 libasound2 libxcomposite1 curl unzip && apt-get clean
+RUN apt-get update && apt-get install -y nano iputils-ping net-tools procps locate apt-file dmidecode  \ 
+    odbc-postgresql unixodbc libxkbcommon-x11-0 libnss3 libdbus-1-3 libgl1 libxmu6 libxrender1 libxrandr2  \
+    libxcursor1 libxinerama1 libxft2 libxss1 libglib2.0-0 libasound2 libxcomposite1 curl unzip && apt-get clean
 
 # Atualizando base locate
 RUN updatedb

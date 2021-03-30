@@ -6,4 +6,4 @@
 /bin/sed 's/{{MSSQL}}/'"${TOPALIAS}"'/' -i /srv/totvs/dbaccess/multi/dbaccess.ini
 
 # Iniciando serviços mssql, licenserver, dbaccess e appserver
-/opt/mssql/bin/sqlservr & /opt/db_mssql.sh && cd /srv/totvs/licenserver/bin/appserver && ./appsrvlinux & cd /srv/totvs/dbaccess/multi && ./dbaccess64 & cd /srv/totvs/protheus/bin/appserver && ./appsrvlinux
+/opt/mssql/db_mssql.sh & /opt/mssql/bin/sqlservr & cd /srv/totvs/licenserver/bin/appserver && ./appsrvlinux & cd /srv/totvs/dbaccess/multi && ./dbaccess64 & cd /srv/totvs/protheus/bin/appserver && ./appsrvlinux

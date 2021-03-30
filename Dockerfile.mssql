@@ -25,11 +25,11 @@ RUN updatedb
 
 # Copiando scripts e binários
 COPY build/mssql/entrypoint.sh /opt
-COPY build/mssql/db_mssql.sh /opt
-COPY build/mssql/db_mssql.sql /opt
+COPY build/mssql/db_mssql.sh /opt/mssql
+COPY build/mssql/db_mssql.sql /opt/mssql
 COPY scripts/setup.sh /tmp
-# COPY protheus/ /tmp
 COPY conf-files/ /tmp
+#COPY protheus/ /tmp
 
 # Montando ambiente Protheus
 RUN /tmp/setup.sh
@@ -37,7 +37,7 @@ RUN /tmp/setup.sh
 # Setando diretório principal
 WORKDIR /srv/totvs
 
-# Expondo portas de conexão MSSQL, Appserver, WebApp, Licenserver e DBAccess 
+# Expondo portas de conexão http, MSSQL, Appserver, WebApp, Licenserver e DBAccess 
 EXPOSE 80 1433 2345 4321 8020 7890
 
 # Iniciando serviços de Banco, Licenserver, DBAccess e Appserver

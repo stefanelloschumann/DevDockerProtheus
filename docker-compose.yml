@@ -1,0 +1,85 @@
+version: "3.9"
+
+services: 
+   #mssql_server:
+   #   build: 
+   #      context: .
+   #      dockerfile: dockerfiles/dockerfile.mssql
+   #   image: mssql_server:2017-latest
+   #   labels: 
+   #      author: "Houston Santos - houston_santos@hotmail.com"
+   #   container_name: mssql_server
+   #   environment:
+   #      ACCEPT_EULA: Y
+   #      MSSQL_PID: Express
+   #      SA_PASSWORD: "@mssql2017"
+   #      DISPLAY: host.docker.internal:0
+   #      TOPALIAS: ${TOPALIAS}
+   #      IP_APPSERVER: ${IP_APPSERVER}
+   #   restart: always
+   #   ports:
+   #      - 1433:1433
+   #      - 7890:7890
+   #   networks:
+   #      totvs:
+   #         ipv4_address: ${IP_DATABASE}
+
+   postgres:
+      build:
+         context: .
+         dockerfile: dockerfiles/dockerfile.postgres
+      image: postgres:13.1
+      container_name: postgres
+      labels: 
+         author: "Houston Santos - houston_santos@hotmail.com"
+      environment: 
+         POSTGRES_PASSWORD: postgres
+         POSTGRES_INITDB_ARGS: "--encoding=WIN1252 --locale=C --username=postgres"
+         DISPLAY: host.docker.internal:0
+         TOPALIAS: ${TOPALIAS}
+         IP_APPSERVER: ${IP_APPSERVER}
+      restart: always
+      ports: 
+         - 5432:5432
+         - 7890:7890
+      networks: 
+         totvs:
+            ipv4_address: ${IP_DATABASE}
+
+   appserver:
+      build: 
+         context: .
+         dockerfile: dockerfiles/dockerfile.appserver
+      #image: protheus:12.1.27
+      container_name: protheus
+      labels: 
+         author: "Houston Santos - houston_santos@hotmail.com"
+      depends_on: 
+         - postgres
+      privileged: true
+      environment: 
+         DISPLAY: host.docker.internal:0
+         LD_LIBRARY_PATH: /srv/totvs/protheus/bin/appserver
+         TOPDATABASE: ${TOPDATABASE}
+         TOPALIAS: ${TOPALIAS}
+         IP_DATABASE: ${IP_DATABASE}
+         AMBIENTE: ${AMBIENTE}
+      restart: always
+      ports: 
+         - 80:80
+         - 2345:2345
+         - 4321:4321
+         - 8020:8020
+         - 8079:8079
+      networks: 
+         totvs:
+            ipv4_address: ${IP_APPSERVER}
+
+networks: 
+   totvs:
+      name: totvs
+      ipam: 
+         driver: default
+         config: 
+            - subnet: ${SUBNET}
+              gateway: ${GATEWAY}

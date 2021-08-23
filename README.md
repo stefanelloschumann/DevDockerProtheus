@@ -27,10 +27,10 @@ Projeto consiste na criação de dois container Docker um do Appserver do Prothe
 `Neste arquivo na seção APPSERVER você deve especificar o banco de dados utilizado na variável TOPDATABASE=SEU_BANCO. E também dar um nome para o driver ODBC e para o ambiente Protheus.`
 
 ## 2. Levantando container
-`docker compose up - O comomado irá realizar o build e suir os containers.`
+`docker compose up - O comomado irá realizar o build e subir os containers.`
 
 ## 3. Configurando smartclient
-Apos levantar o container devemos configurar nosso smartclient local para acesso. Editando o arquivo smartclient.ini, deixeo dessa forma ou edite o seu criando parametrização adicionais.
+Após levantar os containers devemos configurar nosso smartclient local para acesso. Editando o arquivo smartclient.ini, deixeo dessa forma ou edite o seu criando parametrização adicionais.
 
 ```
 [config]

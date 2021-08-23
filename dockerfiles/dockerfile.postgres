@@ -1,0 +1,30 @@
+# Imagem Docker
+FROM postgres:13.1
+
+# Instalando depedências e driver ODBC
+# iputils-ping net-tools procps
+RUN apt-get update && apt-get install -y nano locate apt-file odbc-postgresql unixodbc \
+    libnss3 libgl1 libxmu6 libxrender1 libxrandr2 libxcursor1 libxinerama1 libxft2 && apt-get clean
+
+# Atualizando base locate
+RUN updatedb && apt-file update
+
+# Criando diretório DBAccess
+RUN mkdir -p /srv/totvs/dbaccess 
+
+# Setando diretório principal
+WORKDIR /srv/totvs/dbaccess
+
+# Copiando script, binários e arquivos de configuração
+COPY protheus/dbaccess .
+COPY conf-files/dbaccess.ini .
+COPY conf-files/odbc.ini /etc
+COPY conf-files/odbcinst.ini /etc
+COPY build/postgres/db_postgres.sh /docker-entrypoint-initdb.d
+COPY build/postgres/entrypoint-postgresql.sh /opt
+
+# Expondo porta de conexão Postgres e DBAccess
+EXPOSE 5432 7890
+
+# Iniciando serviços
+CMD /opt/entrypoint-postgresql.sh

@@ -1,0 +1,35 @@
+# Imagem Docker
+FROM ubuntu:21.04
+
+# Instalando depedências e driver ODBC
+RUN apt-get update && apt-get install -y nano locate apt-file dmidecode libgl1 libfreetype6 libfontconfig1 \
+    libxslt1.1 libxkbcommon-x11-0 libnss3 libdbus-1-3 libxss1 libglib2.0-0 libasound2 libxcomposite1 && apt-get clean
+
+# Atualizando base locate
+RUN updatedb && apt-file update
+
+# Copiando scripts
+COPY scripts/entrypoint-appserver.sh /opt
+COPY scripts/setup.sh /tmp
+
+# Montando ambiente Protheus
+RUN /tmp/setup.sh
+
+# Setando diretório principal
+WORKDIR /srv/totvs
+
+# Copiando binários e arquivos de configuração
+COPY protheus/licenserver ./licenserver
+COPY protheus/smartclient ./protheus/bin/smartclient
+COPY protheus/appserver ./protheus/bin/appserver
+COPY protheus/dicionarios ./protheus_data/systemload
+COPY protheus/helps ./protheus_data/systemload
+COPY protheus/menus ./protheus_data/system
+COPY protheus/tttp120.rpo ./protheus/apo
+COPY conf-files/appserver.ini ./protheus/bin/appserver
+
+# Expondo portas de conexão http, Appserver, WebApp, Licenserver e Help
+EXPOSE 80 2345 4321 8020 8097
+
+# Iniciando serviços Licenserver e Appserver
+CMD /opt/entrypoint-appserver.sh

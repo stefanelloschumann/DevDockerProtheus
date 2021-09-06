@@ -33,7 +33,7 @@ services:
       labels: 
          author: "Houston Santos - houston_santos@hotmail.com"
       environment: 
-         POSTGRES_PASSWORD: postgres
+         POSTGRES_PASSWORD: ${DB_PASSWORD}
          POSTGRES_INITDB_ARGS: "--encoding=WIN1252 --locale=C --username=postgres"
          DISPLAY: host.docker.internal:0
          TOPALIAS: ${TOPALIAS}

@@ -27,7 +27,7 @@ jobs:
 
     - name: Exibir
       if: steps.changes.outputs.src == 'true'
-      run: echo ${{ steps.changes.outputs.src_files }}
+      run: echo "${{ steps.changes.outputs.src_files }}"
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

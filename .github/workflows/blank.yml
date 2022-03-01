@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Listar modificados
-      run: echo "${{ toJSON(github.event.head_commit.modified) }}"
+      run: echo "${{ github.event.head_commit }}"
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

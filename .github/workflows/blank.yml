@@ -17,12 +17,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - uses: dorny/paths-filter@v2
+    - name: Alterações
+      uses: dorny/paths-filter@v2
       id: changes
       with:
         filters: |
           src:
-            - '**.yml'
+            - '**'
+
+    - name: Exibir
+      run: echo src_files
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

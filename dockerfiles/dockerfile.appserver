@@ -1,5 +1,5 @@
 # Imagem Docker
-FROM ubuntu:21.04
+FROM ubuntu:latest
 
 # Instalando depedências e driver ODBC
 RUN apt-get update && apt-get install -y nano locate apt-file dmidecode libgl1 libfreetype6 libfontconfig1 \

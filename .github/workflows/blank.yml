@@ -11,28 +11,26 @@ on:
 jobs:
   docker:
     timeout-minutes: 10
-    runs-on: windows-latest
-    outputs:
-      src_files: ${{ steps.changes.outputs.src_files }}
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Alterações
-      uses: dorny/paths-filter@v2
-      id: changes
-      with:
-        filters: |
-          src:
-            - '**'
-        list-files: json
+    # - name: Alterações
+    #   uses: dorny/paths-filter@v2
+    #   id: changes
+    #   with:
+    #     filters: |
+    #       src:
+    #         - '**'
+    #     list-files: json
 
-    - name: Exibir
-      run: echo "${{ join(fromJson(steps.changes.outputs.src_files), ' ') }}"
+    # - name: Exibir
+    #   run: echo "${{ join(fromJson(steps.changes.outputs.src_files), ' ') }}"
 
-    # - name: Start containers
-    #   run: docker-compose -f "docker-compose.yml" up -d --build
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
 
     # - name: Stop containers
     #   if: always()

@@ -18,13 +18,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Listar modificados
-      run: echo ${{ github.event.head_commit.modified }}
+      run: echo "${{ github.event.head_commit.modified }}"
 
     - name: Listar removidos
-      run: echo ${{ github.event.head_commit.removed }}
+      run: echo "${{ github.event.head_commit.removed }}"
 
     - name: Listar adicionados
-      run: echo ${{ github.event.head_commit.added }}
+      run: echo "${{ github.event.head_commit.added }}"
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

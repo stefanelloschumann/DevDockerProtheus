@@ -16,6 +16,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Listar modificados
       run: echo "${{ toJSON(github.event.head_commit.modified) }}"
 
     # - name: Start containers

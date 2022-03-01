@@ -26,9 +26,10 @@ jobs:
         filters: |
           src:
             - '**'
+        list-files: json
 
     - name: Exibir
-      run: echo "${{ steps.changes.outputs.src_files }}"
+      run: echo "${{ join(fromJson(steps.changes.outputs.src_files), ' ') }}"
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

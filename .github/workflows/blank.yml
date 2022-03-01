@@ -17,7 +17,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
       env:
-        commit: ${{ github.event.head_commit }}
+        commit: ${{ github.event.head_commit.modified }}
 
     - name: Start containers
       run: docker-compose -f "docker-compose.yml" up -d --build

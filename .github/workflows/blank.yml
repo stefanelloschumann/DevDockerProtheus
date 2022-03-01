@@ -12,6 +12,8 @@ jobs:
   docker:
     timeout-minutes: 10
     runs-on: windows-latest
+    outputs:
+      src_files: ${{ steps.changes.outputs.src_files }}
 
     steps:
     - name: Checkout

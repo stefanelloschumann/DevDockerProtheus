@@ -17,9 +17,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: get file changes
-      run: | 
-        git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+    - uses: dorny/paths-filter@v2
+      id: changes
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build

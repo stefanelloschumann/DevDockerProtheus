@@ -23,7 +23,7 @@ jobs:
       with:
         filters: |
           src:
-            - '**'
+            - '*.ini'
 
     - name: Exibir
       run: for val in ${{ join(fromJson(steps.changes.outputs.src_files), ' ') }}; do echo $val; done

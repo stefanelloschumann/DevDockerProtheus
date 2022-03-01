@@ -26,7 +26,7 @@ jobs:
             - '**'
 
     - name: Exibir
-      run: for val in ${{ join(fromJson(steps.changes.outputs.changes), ' ') }}; do echo $val; done
+      run: for val in ${{ join(fromJson(steps.changes.outputs.src_files), ' ') }}; do echo $val; done
 
     # - name: Start containers
     #   run: docker-compose -f "docker-compose.yml" up -d --build
